@@ -1,8 +1,42 @@
-import { Play } from "lucide-react"
+"use client";
+import { useState, useEffect, useRef } from "react";
+import { Play } from "lucide-react";
 
 export default function LoginSection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className="py-16 bg-[#000c2a]">
+    <section
+      ref={sectionRef}
+      className={`py-16 bg-[#000c2a] transition-all duration-1000 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
       <div className="max-w-5xl mx-auto px-6">
         <div className="bg-white rounded-lg overflow-hidden shadow-xl flex flex-col md:flex-row">
           {/* Left side - Skill Assessment Library */}
@@ -36,7 +70,13 @@ export default function LoginSection() {
                 {/* Chart icon */}
                 <div className="flex justify-center">
                   <div className="w-16 h-16">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="64"
+                      height="64"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         d="M18 20V10"
                         stroke="#00a8e8"
@@ -74,7 +114,13 @@ export default function LoginSection() {
                 {/* Magnifying glass */}
                 <div className="flex justify-center">
                   <div className="w-16 h-16">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="64"
+                      height="64"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
                         stroke="#00a8e8"
@@ -96,7 +142,13 @@ export default function LoginSection() {
                 {/* Users icon */}
                 <div className="flex justify-center">
                   <div className="w-16 h-16">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="64"
+                      height="64"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21"
                         stroke="#00a8e8"
@@ -132,7 +184,13 @@ export default function LoginSection() {
                 {/* Chart/report icon */}
                 <div className="flex justify-center">
                   <div className="w-16 h-16">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="64"
+                      height="64"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
                         stroke="#f6c648"
@@ -178,7 +236,9 @@ export default function LoginSection() {
           {/* Right side - Login Form */}
           <div className="w-full md:w-1/2 bg-[#00418d] p-8 flex items-center">
             <div className="w-full">
-              <h2 className="text-xl font-bold text-white mb-6">Sign in to Skill Kwiz</h2>
+              <h2 className="text-xl font-bold text-white mb-6">
+                Sign in to Skill Kwiz
+              </h2>
 
               <form className="space-y-4">
                 <div>
@@ -218,16 +278,31 @@ export default function LoginSection() {
                   <p className="mb-2">— Or Login with —</p>
                   <div className="flex justify-center space-x-4">
                     <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
                           fill="white"
                         />
-                        <path d="M17.2 10.8H12.8V7.2H11.2V10.8H6.8V12.4H11.2V16H12.8V12.4H17.2V10.8Z" fill="#DB4437" />
+                        <path
+                          d="M17.2 10.8H12.8V7.2H11.2V10.8H6.8V12.4H11.2V16H12.8V12.4H17.2V10.8Z"
+                          fill="#DB4437"
+                        />
                       </svg>
                     </button>
                     <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           d="M17.0532 12.5282C17.0699 14.0268 17.6762 15.4512 18.7212 16.4962C18.7678 16.5428 18.7911 16.6077 18.7857 16.6733C18.5987 17.6267 18.2697 18.5467 17.8122 19.3992C17.4222 20.1372 16.5372 21.0792 15.6392 21.0852C14.8042 21.0912 14.5022 20.6142 13.5372 20.6142C12.5722 20.6142 12.2342 21.0672 11.4522 21.0912C10.6042 21.1152 9.63221 20.0702 9.23421 19.3362C8.0022 17.3882 7.0252 13.7852 8.3042 11.3582C8.9342 10.1522 10.1042 9.3882 11.3642 9.3642C12.1762 9.3402 12.9342 9.8702 13.4582 9.8702C13.9822 9.8702 14.9232 9.2342 15.9192 9.3402C16.7372 9.3882 17.4702 9.7782 17.9822 10.4022C17.9941 10.4156 18.0026 10.4319 18.0069 10.4496C18.0112 10.4673 18.0111 10.4857 18.0067 10.5033C17.7647 11.1953 17.0622 12.0073 17.0532 12.5282Z"
                           fill="black"
@@ -246,6 +321,5 @@ export default function LoginSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

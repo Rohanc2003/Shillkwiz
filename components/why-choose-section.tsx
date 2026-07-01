@@ -1,8 +1,42 @@
+"use client";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 export default function WhyChooseSection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className="py-16 text-white relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className={`py-16 text-white relative overflow-hidden transition-all duration-1000 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
       {/* Main container with blue background in the middle and white sides */}
       <div className="absolute inset-0 flex">
         {/* Middle section with blue backgrounds */}

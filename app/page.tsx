@@ -113,7 +113,9 @@ export default function HomePage() {
         {/* Call Center Image - Overlapping the video from top and bottom */}
         <div
           ref={callCenterRef}
-          className="absolute w-full h-[60vh]"
+          className={`absolute w-full h-[60vh] transition-all duration-1000 ${
+            isCallCenterVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
           style={{
             top: "50vh",
             zIndex: 2,
