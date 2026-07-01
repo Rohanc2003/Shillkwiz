@@ -3,11 +3,20 @@
 import { useState } from "react";
 import { Info, Calendar, Clock } from "lucide-react";
 
-export default function ScheduleAssessment() {
+export default function ScheduleAssessment({
+  onSubmit,
+}: {
+  onSubmit: () => void;
+}) {
   const [selectedCompany, setSelectedCompany] = useState<string>("microsoft");
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit();
+  };
+
   return (
-    <div className="text-white">
+    <form className="text-white" onSubmit={handleSubmit}>
       <h1 className="text-3xl font-semibold text-center mb-2">
         Schedule Assessment
       </h1>
@@ -26,6 +35,7 @@ export default function ScheduleAssessment() {
         {/* Company Selection */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button
+            type="button"
             className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
               selectedCompany === "microsoft" ? "border-2 border-green-500" : ""
             }`}
@@ -39,6 +49,7 @@ export default function ScheduleAssessment() {
             Microsoft
           </button>
           <button
+            type="button"
             className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
               selectedCompany === "google" ? "border-2 border-green-500" : ""
             }`}
@@ -52,6 +63,7 @@ export default function ScheduleAssessment() {
             Google
           </button>
           <button
+            type="button"
             className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
               selectedCompany === "amazon" ? "border-2 border-green-500" : ""
             }`}
@@ -68,6 +80,7 @@ export default function ScheduleAssessment() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
+            type="button"
             className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
               selectedCompany === "facebook1" ? "border-2 border-green-500" : ""
             }`}
@@ -81,6 +94,7 @@ export default function ScheduleAssessment() {
             Facebook
           </button>
           <button
+            type="button"
             className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
               selectedCompany === "facebook2" ? "border-2 border-green-500" : ""
             }`}
@@ -109,7 +123,11 @@ export default function ScheduleAssessment() {
           <div>
             <label className="block mb-2">Select Country</label>
             <div className="relative">
-              <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+              <select
+                className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none"
+                required
+              >
+                <option value="">Select Country</option>
                 <option>India</option>
                 <option>United States</option>
                 <option>United Kingdom</option>
@@ -136,8 +154,11 @@ export default function ScheduleAssessment() {
           <div>
             <label className="block mb-2">Select Zip Code</label>
             <div className="relative">
-              <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
-                <option>Enter your area's Zip code</option>
+              <select
+                className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none"
+                required
+              >
+                <option value="">Enter your area's Zip code</option>
                 <option>110001</option>
                 <option>110002</option>
               </select>
@@ -163,35 +184,11 @@ export default function ScheduleAssessment() {
           <div>
             <label className="block mb-2">Select Testing Centre</label>
             <div className="relative">
-              <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
-                <option>Enter your Centre</option>
-                <option>Centre 1</option>
-                <option>Centre 2</option>
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label className="block mb-2">Select Testing Centre</label>
-            <div className="relative">
-              <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
-                <option>Enter your Centre</option>
+              <select
+                className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none"
+                required
+              >
+                <option value="">Enter your Centre</option>
                 <option>Centre 1</option>
                 <option>Centre 2</option>
               </select>
@@ -222,18 +219,21 @@ export default function ScheduleAssessment() {
                   type="text"
                   placeholder="MM"
                   className="w-12 bg-transparent focus:outline-none text-center"
+                  required
                 />
                 <span className="mx-1">|</span>
                 <input
                   type="text"
                   placeholder="DD"
                   className="w-12 bg-transparent focus:outline-none text-center"
+                  required
                 />
                 <span className="mx-1">|</span>
                 <input
                   type="text"
                   placeholder="YYYY"
                   className="w-16 bg-transparent focus:outline-none text-center"
+                  required
                 />
                 <Calendar className="ml-auto w-5 h-5" />
               </div>
@@ -246,18 +246,21 @@ export default function ScheduleAssessment() {
                   type="text"
                   placeholder="03"
                   className="w-12 bg-transparent focus:outline-none text-center"
+                  required
                 />
                 <span className="mx-1">|</span>
                 <input
                   type="text"
                   placeholder="35"
                   className="w-12 bg-transparent focus:outline-none text-center"
+                  required
                 />
                 <span className="mx-1">|</span>
                 <input
                   type="text"
                   placeholder="AM"
                   className="w-12 bg-transparent focus:outline-none text-center"
+                  required
                 />
                 <Clock className="ml-auto w-5 h-5" />
               </div>
@@ -267,11 +270,14 @@ export default function ScheduleAssessment() {
 
         {/* Submit Button */}
         <div className="flex justify-center mt-8">
-          <button className="px-20 py-2 rounded bg-gradient-to-r from-[#4ECDC4] to-[#2d8a84] text-white hover:opacity-90">
+          <button
+            type="submit"
+            className="px-20 py-2 rounded bg-gradient-to-r from-[#4ECDC4] to-[#2d8a84] text-white hover:opacity-90"
+          >
             Submit
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

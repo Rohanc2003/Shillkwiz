@@ -1,8 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import LoginForm from "@/components/login-form";
 import EmployeeRegistration from "@/components/employee-registeration";
 import ScheduleAssessment from "@/components/schedule-assessment";
@@ -13,6 +14,7 @@ import EmployerCandidateList from "@/components/employer-candidate-list";
 import SuccessMessage from "@/components/success-message";
 
 export default function ServicesPage() {
+  const router = useRouter();
   // Authentication state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState<"employer" | "employee" | null>(
@@ -24,6 +26,10 @@ export default function ServicesPage() {
     useState(false);
   const [employerRegistrationSuccess, setEmployerRegistrationSuccess] =
     useState(false);
+  const [assessmentRequestSuccess, setAssessmentRequestSuccess] =
+    useState(false);
+  const [scheduleAssessmentSuccess, setScheduleAssessmentSuccess] =
+    useState(false);
 
   // Screen states
   const [employeeScreen, setEmployeeScreen] = useState<
@@ -32,6 +38,9 @@ export default function ServicesPage() {
   const [employerScreen, setEmployerScreen] = useState<
     "registration" | "profile" | "assessment" | "candidates"
   >("registration");
+
+  // Form key
+  const [formKey, setFormKey] = useState(0);
 
   // Handle login
   const handleLogin = (type: "employer" | "employee") => {
@@ -58,6 +67,16 @@ export default function ServicesPage() {
     setEmployerRegistrationSuccess(true);
   };
 
+  // Handle assessment request submission
+  const handleAssessmentRequestSuccess = () => {
+    setAssessmentRequestSuccess(true);
+  };
+
+  // Handle schedule assessment submission
+  const handleScheduleAssessmentSuccess = () => {
+    setScheduleAssessmentSuccess(true);
+  };
+
   // Continue after employee registration success
   const continueToEmployeeAssessment = () => {
     setEmployeeRegistrationSuccess(false);
@@ -68,6 +87,21 @@ export default function ServicesPage() {
   const continueToEmployerProfile = () => {
     setEmployerRegistrationSuccess(false);
     setEmployerScreen("profile");
+  };
+
+  const continueToCandidateList = () => {
+    setAssessmentRequestSuccess(false);
+    setEmployerScreen("candidates");
+  };
+
+  const handleScheduleAnother = () => {
+    setScheduleAssessmentSuccess(false);
+    setFormKey((prevKey) => prevKey + 1);
+  };
+
+  const handleCloseAndRedirect = () => {
+    setScheduleAssessmentSuccess(false);
+    router.push("/");
   };
 
   return (
@@ -118,7 +152,44 @@ export default function ServicesPage() {
                       onNext={handleEmployeeRegistrationComplete}
                     />
                   ) : (
-                    <ScheduleAssessment />
+                    <>
+                      <ScheduleAssessment
+                        key={formKey}
+                        onSubmit={handleScheduleAssessmentSuccess}
+                      />
+                      {scheduleAssessmentSuccess && (
+                        <div
+                          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+                          onClick={handleCloseAndRedirect}
+                        >
+                          <div
+                            className="relative bg-gradient-to-r from-[#3a4a7b]/90 to-[#9ba3b9]/90 rounded-lg p-8 backdrop-blur-sm max-w-md mx-auto"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <button
+                              onClick={handleCloseAndRedirect}
+                              className="absolute top-4 right-4 text-white hover:text-gray-300"
+                            >
+                              <X className="w-6 h-6" />
+                            </button>
+                            <SuccessMessage
+                              title="Assessment Scheduled!"
+                              message="Your assessment has been successfully scheduled. Please check your email for details."
+                              buttonText="Schedule Another"
+                              onContinue={handleScheduleAnother}
+                            />
+                            <div className="mt-4 text-center">
+                              <button
+                                onClick={handleCloseAndRedirect}
+                                className="text-white hover:underline"
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               ) : (
@@ -179,12 +250,25 @@ export default function ServicesPage() {
 
                       {/* Employer Content */}
                       <div className="bg-gradient-to-r from-[#3a4a7b]/90 to-[#9ba3b9]/90 rounded-lg p-8 backdrop-blur-sm">
-                        {employerScreen === "profile" && <EmployerProfile />}
-                        {employerScreen === "assessment" && (
-                          <EmployerAssessmentRequest />
-                        )}
-                        {employerScreen === "candidates" && (
-                          <EmployerCandidateList />
+                        {assessmentRequestSuccess ? (
+                          <SuccessMessage
+                            title="Assessment Request Submitted!"
+                            message="Your assessment request has been successfully submitted. You will be notified once the assessment is complete."
+                            buttonText="View Candidate List"
+                            onContinue={continueToCandidateList}
+                          />
+                        ) : (
+                          <>
+                            {employerScreen === "profile" && <EmployerProfile />}
+                            {employerScreen === "assessment" && (
+                              <EmployerAssessmentRequest
+                                onSubmit={handleAssessmentRequestSuccess}
+                              />
+                            )}
+                            {employerScreen === "candidates" && (
+                              <EmployerCandidateList />
+                            )}
+                          </>
                         )}
                       </div>
                     </>

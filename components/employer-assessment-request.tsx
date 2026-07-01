@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { Upload } from "lucide-react";
 
-export default function EmployerAssessmentRequest() {
+export default function EmployerAssessmentRequest({
+  onSubmit,
+}: {
+  onSubmit: () => void;
+}) {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([
     "C++",
     "Python",
@@ -17,8 +21,13 @@ export default function EmployerAssessmentRequest() {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit();
+  };
+
   return (
-    <div className="text-white">
+    <form className="text-white" onSubmit={handleSubmit}>
       <h1 className="text-3xl font-semibold text-center mb-2">
         Employer Skill
       </h1>
@@ -35,11 +44,13 @@ export default function EmployerAssessmentRequest() {
               type="text"
               placeholder="First Name"
               className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              required
             />
             <input
               type="text"
               placeholder="Last Name"
               className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              required
             />
           </div>
         </div>
@@ -51,6 +62,7 @@ export default function EmployerAssessmentRequest() {
             type="email"
             placeholder="Enter Email"
             className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+            required
           />
         </div>
 
@@ -61,6 +73,7 @@ export default function EmployerAssessmentRequest() {
             type="tel"
             placeholder="Enter Phone No."
             className="w-full bg-[#333333] rounded px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+            required
           />
         </div>
 
@@ -68,7 +81,10 @@ export default function EmployerAssessmentRequest() {
         <div>
           <label className="block mb-2">Candidate ID</label>
           <div className="relative">
-            <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+            <select
+              className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none"
+              required
+            >
               <option>PAN Card</option>
               <option>Aadhar Card</option>
               <option>Voter ID</option>
@@ -101,7 +117,12 @@ export default function EmployerAssessmentRequest() {
           <label className="w-full bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] flex items-center cursor-pointer">
             <Upload className="w-5 h-5 mr-2" />
             <span>Upload your Resume</span>
-            <input type="file" className="hidden" accept=".pdf,.doc,.docx" />
+            <input
+              type="file"
+              className="hidden"
+              accept=".pdf,.doc,.docx"
+              required
+            />
           </label>
         </div>
 
@@ -257,7 +278,10 @@ export default function EmployerAssessmentRequest() {
         <div>
           <label className="block mb-2">Credit Cards</label>
           <div className="relative">
-            <select className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none">
+            <select
+              className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none"
+              required
+            >
               <option>ICIC Card</option>
               <option>HDFC Card</option>
               <option>SBI Card</option>
@@ -290,7 +314,16 @@ export default function EmployerAssessmentRequest() {
             skill assessment of specified job candidate.
           </p>
         </div>
+
+        <div className="flex justify-center mt-6">
+          <button
+            type="submit"
+            className="px-10 py-3 rounded-md bg-gradient-to-r from-[#4ECDC4] to-[#2d8a84] text-white hover:opacity-90 font-medium"
+          >
+            Request Assessment
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
   );
 }
