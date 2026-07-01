@@ -1,9 +1,9 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 
-export default function LoginSection() {
+export default function SignUpPage() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -43,22 +43,29 @@ export default function LoginSection() {
           {/* Left side - Image */}
           <div className="w-full md:w-1/2 p-8 flex items-center justify-center">
             <Image
-              src="/images/login-section.png"
-              alt="Login illustration"
+              src="/images/login-section.png" // Reusing the same image as login for consistency
+              alt="Sign Up illustration"
               width={400}
               height={400}
               className="object-contain"
             />
           </div>
 
-          {/* Right side - Login Form */}
+          {/* Right side - Sign Up Form */}
           <div className="w-full md:w-1/2 bg-[#00418d] p-8 flex items-center">
             <div className="w-full">
               <h2 className="text-xl font-bold text-white mb-6">
-                Sign in to Skill Kwiz
+                Create Your SkillKwiz Account
               </h2>
 
               <form className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    className="w-full bg-gray-200 text-gray-800 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00a8e8]"
+                  />
+                </div>
                 <div>
                   <input
                     type="email"
@@ -75,28 +82,26 @@ export default function LoginSection() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <label className="flex items-center text-white">
-                    <input type="checkbox" className="h-4 w-4 mr-2" />
-                    Remember me
-                  </label>
-                  <a href="#" className="text-white hover:underline">
-                    Forget Password?
-                  </a>
+                <div>
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    className="w-full bg-gray-200 text-gray-800 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00a8e8]"
+                  />
                 </div>
 
                 <button
                   type="submit"
                   className="w-full bg-[#f73e5d] text-white p-3 rounded-md font-medium hover:bg-opacity-90 transition-all"
                 >
-                  Sign In
+                  Sign Up
                 </button>
 
                 <div className="text-center text-white pt-4">
                   <p>
-                    Don't have an account?{" "}
-                    <Link href="/signup" className="text-[#f6c648] hover:underline font-semibold">
-                      Sign Up
+                    Already have an account?{" "}
+                    <Link href="#" className="text-[#f6c648] hover:underline font-semibold">
+                      Login
                     </Link>
                   </p>
                 </div>
