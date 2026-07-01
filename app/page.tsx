@@ -131,7 +131,7 @@ export default function HomePage() {
         </div>
 
         {/* SkillKwiz Tag - Positioned below the call center image */}
-        <div className="relative mt-[45vh] md:mt-[35vh]" style={{ zIndex: 3 }}>
+        <div className="relative mt-[30vh] md:mt-[20vh]" style={{ zIndex: 3 }}>
           <div className="bg-[#f6c648] text-[#00418d] py-4 px-6 inline-block transform skew-x-12 -ml-4">
             <div className="transform -skew-x-12">
               <h2 className="text-xl font-bold">
@@ -141,7 +141,7 @@ export default function HomePage() {
           </div>
 
           {/* Letter Carousel - Added right after the SkillKwiz tag */}
-          <div className="mt-8 mb-12">
+          <div className="mt-8 mb-8">
             <LetterCarousel />
           </div>
         </div>

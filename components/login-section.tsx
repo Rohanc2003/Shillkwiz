@@ -34,7 +34,7 @@ export default function LoginSection() {
   return (
     <section
       ref={sectionRef}
-      className={`py-16 bg-[#000c2a] transition-all duration-1000 ${
+      className={`py-12 bg-[#000c2a] transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >

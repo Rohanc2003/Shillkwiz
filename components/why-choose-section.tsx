@@ -33,7 +33,7 @@ export default function WhyChooseSection() {
   return (
     <section
       ref={sectionRef}
-      className={`py-16 text-white relative overflow-hidden transition-all duration-1000 ${
+      className={`py-12 text-white relative overflow-hidden transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
@@ -81,7 +81,7 @@ export default function WhyChooseSection() {
           </span>{" "}
           ?
         </h2>
-        <p className="text-center max-w-3xl mx-auto mb-12 text-sm">
+        <p className="text-center max-w-3xl mx-auto mb-8 text-sm">
           Discover our unique value propositions designed to enhance your
           recruitment strategy.
           <br />
@@ -89,7 +89,7 @@ export default function WhyChooseSection() {
         </p>
 
         {/* Card container with increased height to match image */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-16 relative h-[450px] md:h-[400px]">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-12 relative h-[450px] md:h-[400px]">
           {/* Skill Library Card - Tilted Left */}
           <div
             className="bg-white rounded-lg p-6 text-black max-w-xs w-full md:w-64 md:h-[350px] transform md:absolute md:left-[calc(50%-280px)] md:top-4 hover:-translate-y-2 transition-transform duration-300 shadow-lg z-10"
@@ -166,7 +166,7 @@ export default function WhyChooseSection() {
           </div>
         </div>
 
-        <div className="text-center mt-32 md:mt-24 relative z-20">
+        <div className="text-center mt-16 relative z-20">
           <h3 className="text-2xl font-bold mb-4">
             Join the Talent Revolution
           </h3>
