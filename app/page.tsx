@@ -63,7 +63,7 @@ export default function HomePage() {
         {/* Video Section at the top */}
         <section
           ref={heroRef}
-          className="relative w-full h-[80vh] text-white overflow-hidden"
+          className="relative w-full h-[70vh] md:h-[60vh] text-white overflow-hidden pt-20 md:pt-24 -mt-12 md:-mt-16"
           style={{ zIndex: 1 }}
         >
           {/* Background Video */}
@@ -129,7 +129,7 @@ export default function HomePage() {
         </div>
 
         {/* SkillKwiz Tag - Positioned below the call center image */}
-        <div className="relative mt-[65vh]" style={{ zIndex: 3 }}>
+        <div className="relative mt-[45vh] md:mt-[35vh]" style={{ zIndex: 3 }}>
           <div className="bg-[#f6c648] text-[#00418d] py-4 px-6 inline-block transform skew-x-12 -ml-4">
             <div className="transform -skew-x-12">
               <h2 className="text-xl font-bold">
