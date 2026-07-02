@@ -13,6 +13,51 @@ const navLinks = [
   { href: "/blog", label: "Blog" },
 ];
 
+/** PNG icon + styled HTML brand text */
+function LogoBrand({ iconSize = 44 }: { iconSize?: number }) {
+  return (
+    <div className="flex items-center gap-2.5">
+      {/* PNG icon */}
+      <Image
+        src="/images/logo.png"
+        alt="SkillKwiz icon"
+        width={iconSize}
+        height={iconSize}
+        className="object-contain shrink-0"
+        style={{ width: iconSize, height: iconSize }}
+        priority
+      />
+      {/* Brand text */}
+      <div className="flex flex-col justify-center leading-tight">
+        <span
+          className="font-black tracking-wide"
+          style={{
+            fontFamily: "'Cinzel', 'Palatino Linotype', 'Georgia', serif",
+            color: "#ffffff",
+            fontSize: "1.15rem",
+            lineHeight: 1.1,
+            letterSpacing: "0.02em",
+          }}
+        >
+          SkillKwiz
+        </span>
+        <span
+          className="font-medium tracking-wide whitespace-nowrap"
+          style={{
+            fontFamily: "'Nunito', 'Segoe UI', sans-serif",
+            color: "#e8d0ea",
+            fontSize: "0.6rem",
+            lineHeight: 1.3,
+            letterSpacing: "0.03em",
+          }}
+        >
+          How much do you know?
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -21,59 +66,63 @@ export default function SiteHeader() {
 
   return (
     <div className="w-full fixed top-0 left-0 z-50">
-      <nav className="flex flex-col w-full md:w-4/5 lg:w-3/5 xl:w-1/2 mx-auto bg-[#335f92] text-white rounded-b-3xl">
-        <div className="flex items-center justify-between md:justify-center px-4 py-2 md:gap-8 lg:gap-12">
-          {/* Logo — always visible */}
+      <nav className="w-full md:w-4/5 lg:w-3/5 xl:w-1/2 mx-auto bg-[#335f92] text-white rounded-b-3xl">
+
+        {/* ── Desktop row ── */}
+        <div className="hidden md:flex items-center justify-between h-[76px] px-6">
+          {/* Logo — left */}
           <Link
             href="/"
             onClick={closeMenu}
-            className="flex items-center mr-auto md:mr-0"
+            className="flex items-center shrink-0"
             aria-label="SkillKwiz home"
           >
-            <Image
-              src="/images/SVG File- logo (1).svg"
-              alt="SkillKwiz Logo"
-              width={180}
-              height={42}
-              className="w-[180px] h-auto object-contain"
-              priority
-            />
+            <LogoBrand iconSize={44} />
           </Link>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-white focus:outline-none z-20 ml-auto"
-            onClick={() => setIsMenuOpen((prev) => !prev)}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMenuOpen}
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:gap-1">
+          {/* Nav links — right */}
+          <div className="flex items-center">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className={`relative group py-4 px-3 text-sm lg:text-base transition-all ${
+                className={`relative group px-4 py-1 text-sm font-medium whitespace-nowrap transition-colors ${
                   pathname === href
-                    ? "text-yellow-400 font-semibold"
+                    ? "text-yellow-400"
                     : "text-white hover:text-yellow-300"
                 }`}
               >
-                <span>{label}</span>
-                <span className="absolute left-0 bottom-2 w-full h-0.5 bg-gradient-to-r from-blue-400 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                {label}
+                <span className="absolute left-0 -bottom-0.5 w-full h-0.5 bg-gradient-to-r from-blue-400 to-yellow-400 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Mobile Navigation — fixed overlay so it sits above all page content */}
+        {/* ── Mobile row ── */}
+        <div className="flex md:hidden items-center justify-between h-[72px] px-5">
+          {/* Logo — left */}
+          <Link
+            href="/"
+            onClick={closeMenu}
+            aria-label="SkillKwiz home"
+            className="flex items-center shrink-0"
+          >
+            <LogoBrand iconSize={38} />
+          </Link>
+
+          {/* Hamburger — right */}
+          <button
+            className="text-white focus:outline-none"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+
+        {/* ── Mobile overlay menu ── */}
         {isMenuOpen && (
           <>
             {/* Backdrop */}
@@ -82,31 +131,19 @@ export default function SiteHeader() {
               onClick={closeMenu}
               aria-hidden="true"
             />
-            {/* Menu panel */}
-            <div className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center py-4 bg-[#335f92] rounded-b-3xl pt-16 shadow-xl">
-              {/* Close button at top-right */}
+            {/* Panel */}
+            <div className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center pt-20 pb-6 bg-[#335f92] rounded-b-3xl shadow-xl">
               <button
-                className="absolute top-3 right-4 text-white"
+                className="absolute top-4 right-5 text-white"
                 onClick={closeMenu}
                 aria-label="Close menu"
               >
                 <X className="h-6 w-6" />
               </button>
 
-              {/* Logo row */}
-              <Link
-                href="/"
-                onClick={closeMenu}
-                className="flex items-center mb-2"
-              >
-                <Image
-                  src="/images/SVG File- logo (1).svg"
-                  alt="SkillKwiz Logo"
-                  width={140}
-                  height={33}
-                  className="w-[140px] h-auto object-contain"
-                  priority
-                />
+              {/* Logo in overlay */}
+              <Link href="/" onClick={closeMenu} className="mb-4">
+                <LogoBrand iconSize={38} />
               </Link>
 
               {navLinks.map(({ href, label }) => (
@@ -114,14 +151,11 @@ export default function SiteHeader() {
                   key={href}
                   href={href}
                   onClick={closeMenu}
-                  className={`relative group py-3 text-lg w-full text-center transition-colors ${
-                    pathname === href
-                      ? "text-yellow-400 font-semibold"
-                      : "text-white"
+                  className={`w-full py-3 text-center text-base font-medium transition-colors ${
+                    pathname === href ? "text-yellow-400" : "text-white"
                   }`}
                 >
-                  <span>{label}</span>
-                  <span className="absolute left-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-blue-400 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                  {label}
                 </Link>
               ))}
             </div>
