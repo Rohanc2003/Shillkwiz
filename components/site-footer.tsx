@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-[#003b8e] text-white">
@@ -10,14 +12,14 @@ export default function Footer() {
               SkillKwiz is at the forefront of transforming recruitment with
               innovative assessment solutions and best-in-class support.
             </p>
-            <div className="text-sm">
-              <a href="/contact" className="hover:underline">
+            <div className="text-sm flex gap-3">
+              <Link href="/contact" className="hover:text-yellow-300 hover:underline transition-colors">
                 Contact
-              </a>
-              <span className="mx-2">|</span>
-              <a href="/sales" className="hover:underline">
+              </Link>
+              <span>|</span>
+              <Link href="/sales" className="hover:text-yellow-300 hover:underline transition-colors">
                 Sales
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -26,29 +28,33 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/" className="hover:underline">
+                <Link href="/" className="hover:text-yellow-300 hover:underline transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about" className="hover:underline">
+                <Link href="/about" className="hover:text-yellow-300 hover:underline transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/services" className="hover:underline">
+                <Link href="/services" className="hover:text-yellow-300 hover:underline transition-colors">
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/files/sample-resource.pdf" download="sample-resource.pdf" className="hover:underline">
+                <a
+                  href="/files/sample-resource.pdf"
+                  download="sample-resource.pdf"
+                  className="hover:text-yellow-300 hover:underline transition-colors"
+                >
                   Resources
                 </a>
               </li>
               <li>
-                <a href="/investors" className="hover:underline">
-                  Investors
-                </a>
+                <Link href="/blog" className="hover:text-yellow-300 hover:underline transition-colors">
+                  Blog
+                </Link>
               </li>
             </ul>
           </div>
@@ -63,13 +69,19 @@ export default function Footer() {
               </p>
               <p>
                 Email:{" "}
-                <a href="mailto:info@skillkwiz.com" className="hover:underline">
+                <a
+                  href="mailto:info@skillkwiz.com"
+                  className="hover:text-yellow-300 hover:underline transition-colors"
+                >
                   info@skillkwiz.com
                 </a>
               </p>
               <p>
                 Phone:{" "}
-                <a href="tel:+919740377330" className="hover:underline">
+                <a
+                  href="tel:+919740377330"
+                  className="hover:text-yellow-300 hover:underline transition-colors"
+                >
                   +91-9740377330
                 </a>
               </p>
@@ -80,8 +92,8 @@ export default function Footer() {
 
       {/* Copyright Bar */}
       <div className="border-t border-blue-700">
-        <div className="max-w-7xl mx-auto px-6 py-4 text-sm text-center">
-          Copyright © 2025
+        <div className="max-w-7xl mx-auto px-6 py-4 text-sm text-center text-blue-200">
+          Copyright © 2025 SkillKwiz. All rights reserved.
         </div>
       </div>
     </footer>

@@ -109,7 +109,7 @@ export default function ServicesPage() {
       {/* Background pattern */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
-          src="/images/background.png"
+          src="/images/servicespage/services-bg.png"
           alt="Background"
           fill
           priority
@@ -217,30 +217,30 @@ export default function ServicesPage() {
                         <div className="grid grid-cols-3 gap-1">
                           <button
                             onClick={() => setEmployerScreen("profile")}
-                            className={`py-3 px-4 text-center text-white font-medium ${
+                            className={`py-3 px-4 text-center font-medium transition-colors duration-200 ${
                               employerScreen === "profile"
-                                ? "bg-[#2d5184] rounded-lg"
-                                : ""
+                                ? "bg-[#2d5184] rounded-lg text-white"
+                                : "text-[#212121] hover:text-[#00418d]"
                             }`}
                           >
                             Profile
                           </button>
                           <button
                             onClick={() => setEmployerScreen("assessment")}
-                            className={`py-3 px-4 text-center text-white font-medium ${
+                            className={`py-3 px-4 text-center font-medium transition-colors duration-200 ${
                               employerScreen === "assessment"
-                                ? "bg-[#2d5184] rounded-lg"
-                                : ""
+                                ? "bg-[#2d5184] rounded-lg text-white"
+                                : "text-[#212121] hover:text-[#00418d]"
                             }`}
                           >
                             Assessment Request
                           </button>
                           <button
                             onClick={() => setEmployerScreen("candidates")}
-                            className={`py-3 px-4 text-center text-white font-medium ${
+                            className={`py-3 px-4 text-center font-medium transition-colors duration-200 ${
                               employerScreen === "candidates"
-                                ? "bg-[#2d5184] rounded-lg"
-                                : ""
+                                ? "bg-[#2d5184] rounded-lg text-white"
+                                : "text-[#212121] hover:text-[#00418d]"
                             }`}
                           >
                             Candidate List

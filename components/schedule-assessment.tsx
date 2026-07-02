@@ -36,7 +36,7 @@ export default function ScheduleAssessment({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button
             type="button"
-            className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
+            className={`flex items-center justify-center gap-2 bg-[#1a2544] rounded px-4 py-3 text-white hover:bg-[#253562] ${
               selectedCompany === "microsoft" ? "border-2 border-green-500" : ""
             }`}
             onClick={() => setSelectedCompany("microsoft")}
@@ -50,7 +50,7 @@ export default function ScheduleAssessment({
           </button>
           <button
             type="button"
-            className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
+            className={`flex items-center justify-center gap-2 bg-[#1a2544] rounded px-4 py-3 text-white hover:bg-[#253562] ${
               selectedCompany === "google" ? "border-2 border-green-500" : ""
             }`}
             onClick={() => setSelectedCompany("google")}
@@ -64,7 +64,7 @@ export default function ScheduleAssessment({
           </button>
           <button
             type="button"
-            className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
+            className={`flex items-center justify-center gap-2 bg-[#1a2544] rounded px-4 py-3 text-white hover:bg-[#253562] ${
               selectedCompany === "amazon" ? "border-2 border-green-500" : ""
             }`}
             onClick={() => setSelectedCompany("amazon")}
@@ -81,7 +81,7 @@ export default function ScheduleAssessment({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             type="button"
-            className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
+            className={`flex items-center justify-center gap-2 bg-[#1a2544] rounded px-4 py-3 text-white hover:bg-[#253562] ${
               selectedCompany === "facebook1" ? "border-2 border-green-500" : ""
             }`}
             onClick={() => setSelectedCompany("facebook1")}
@@ -95,7 +95,7 @@ export default function ScheduleAssessment({
           </button>
           <button
             type="button"
-            className={`flex items-center justify-center gap-2 bg-[#333333] rounded px-4 py-3 text-white hover:bg-[#444444] ${
+            className={`flex items-center justify-center gap-2 bg-[#1a2544] rounded px-4 py-3 text-white hover:bg-[#253562] ${
               selectedCompany === "facebook2" ? "border-2 border-green-500" : ""
             }`}
             onClick={() => setSelectedCompany("facebook2")}
@@ -124,7 +124,7 @@ export default function ScheduleAssessment({
             <label className="block mb-2">Select Country</label>
             <div className="relative">
               <select
-                className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none"
+                className="w-full bg-[#1a2544] rounded px-4 py-3 text-white appearance-none focus:outline-none"
                 required
               >
                 <option value="">Select Country</option>
@@ -155,7 +155,7 @@ export default function ScheduleAssessment({
             <label className="block mb-2">Select Zip Code</label>
             <div className="relative">
               <select
-                className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none"
+                className="w-full bg-[#1a2544] rounded px-4 py-3 text-white appearance-none focus:outline-none"
                 required
               >
                 <option value="">Enter your area's Zip code</option>
@@ -185,7 +185,7 @@ export default function ScheduleAssessment({
             <label className="block mb-2">Select Testing Centre</label>
             <div className="relative">
               <select
-                className="w-full bg-[#333333] rounded px-4 py-3 text-white appearance-none focus:outline-none"
+                className="w-full bg-[#1a2544] rounded px-4 py-3 text-white appearance-none focus:outline-none"
                 required
               >
                 <option value="">Enter your Centre</option>
@@ -214,7 +214,7 @@ export default function ScheduleAssessment({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block mb-2">Select a Date</label>
-              <div className="flex items-center bg-[#333333] rounded px-4 py-3 text-white">
+              <div className="flex items-center bg-[#1a2544] rounded px-4 py-3 text-white">
                 <input
                   type="text"
                   placeholder="MM"
@@ -241,7 +241,7 @@ export default function ScheduleAssessment({
 
             <div>
               <label className="block mb-2">Select Time</label>
-              <div className="flex items-center bg-[#333333] rounded px-4 py-3 text-white">
+              <div className="flex items-center bg-[#1a2544] rounded px-4 py-3 text-white">
                 <input
                   type="text"
                   placeholder="03"
@@ -272,7 +272,7 @@ export default function ScheduleAssessment({
         <div className="flex justify-center mt-8">
           <button
             type="submit"
-            className="px-20 py-2 rounded bg-gradient-to-r from-[#4ECDC4] to-[#2d8a84] text-white hover:opacity-90"
+            className="px-20 py-2 rounded bg-[#00418d] text-white hover:bg-[#002f6e] transition-colors"
           >
             Submit
           </button>

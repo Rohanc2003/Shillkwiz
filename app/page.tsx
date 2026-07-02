@@ -9,146 +9,122 @@ import TestimonialsSection from "@/components/testimonials-section";
 import LetterCarousel from "@/components/letter-carousel";
 
 export default function HomePage() {
-  const [scrollStage, setScrollStage] = useState(0);
   const [isCallCenterVisible, setIsCallCenterVisible] = useState(false);
-  const globeRef = useRef<HTMLDivElement>(null);
+  const [videoSrc, setVideoSrc] = useState("");
   const callCenterRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      if (scrollY < 100) {
-        setScrollStage(0);
-      } else if (scrollY < 400) {
-        setScrollStage(1);
-      } else {
-        setScrollStage(2);
-      }
-    };
-
-    const observerOptions: IntersectionObserverInit = {
-      threshold: 0.2,
-      rootMargin: "-100px",
-    };
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry: IntersectionObserverEntry) => {
-        if (entry.target === callCenterRef.current) {
-          setIsCallCenterVisible(entry.isIntersecting);
-        }
-      });
-    };
+    // Defer loading the large background video to optimize client-side navigation
+    setVideoSrc("/images/homepage/banner_video.mp4");
 
     const observer = new IntersectionObserver(
-      handleIntersection,
-      observerOptions
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsCallCenterVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        // Generous margin so it triggers before the user has to scroll all the way
+        threshold: 0.05,
+        rootMargin: "0px",
+      }
     );
 
     if (callCenterRef.current) {
       observer.observe(callCenterRef.current);
     }
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Main container with relative positioning */}
       <div className="relative">
-        {/* Video Section at the top */}
-        <section
-          ref={heroRef}
-          className="relative w-full h-[70vh] md:h-[60vh] text-white overflow-hidden pt-20 md:pt-24 -mt-12 md:-mt-16"
-          style={{ zIndex: 1 }}
-        >
+        {/* ─── Hero Section ─── */}
+        <section className="relative w-full text-white overflow-hidden pt-14 md:pt-18">
           {/* Background Video */}
           <video
-            className="absolute top-0 left-0 w-full h-full object-cover"
+            className="absolute top-0 left-0 w-full h-full object-cover z-0"
             autoPlay
             muted
             loop
             playsInline
           >
-            <source src="/images/homepage/banner_video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
+            {videoSrc && <source src={videoSrc} type="video/mp4" />}
           </video>
 
-          <div className="max-w-7xl mx-auto px-6 py-8 relative z-10 h-full">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-full">
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <div className="max-w-7xl mx-auto px-6 py-7 md:py-9 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+              {/* Text */}
+              <div className="-mt-1 md:-mt-2">
+                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 leading-tight">
                   Assessments in Secure Centers
                 </h1>
-                {/* <p className="text-lg mb-8">
+                <p className="text-sm md:text-base mb-3 max-w-md opacity-90">
                   Interactive, fun, and personalized learning designed to boost
                   your knowledge effortlessly.
-                </p> */}
+                </p>
                 <Link
                   href="/services"
-                  className="inline-flex items-center justify-center bg-[#f73e5d] text-white px-8 py-3 rounded-full font-medium hover:bg-opacity-90 transition-all"
+                  className="inline-flex items-center justify-center bg-[#f73e5d] text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#e02d4c] transition-colors"
                 >
                   Get Started
                 </Link>
               </div>
 
-              {/* Globe Image positioned to the right of the text */}
-              <div ref={globeRef} className="flex justify-center items-center">
+              {/* Globe */}
+              <div className="flex justify-center items-center">
                 <Image
                   src="/images/homepage/home_globe.gif"
                   alt="SkillKwiz assessment platform"
-                  width={600}
-                  height={400}
-                  className="w-full max-w-md h-auto"
+                  width={400}
+                  height={280}
+                  className="w-full max-w-[110px] md:max-w-[150px] lg:max-w-[170px] h-auto"
+                  priority
                 />
               </div>
             </div>
           </div>
         </section>
 
-        {/* Call Center Image - Overlapping the video from top and bottom */}
+        {/* ─── Call Center Image ─── */}
         <div
           ref={callCenterRef}
-          className={`absolute w-full h-[60vh] transition-all duration-1000 ${
-            isCallCenterVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`relative w-full transition-all duration-1000 ${
+            isCallCenterVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
           }`}
-          style={{
-            top: "50vh",
-            zIndex: 2,
-          }}
         >
           <Image
             src="/images/homepage/call-center.png"
             alt="Call center agents with headsets"
             width={1920}
             height={980}
-            className="w-[100vw] h-auto object-cover"
+            className="w-full h-auto max-h-[350px] object-cover"
           />
         </div>
 
-        {/* SkillKwiz Tag - Positioned below the call center image */}
-        <div className="relative mt-[30vh] md:mt-[20vh]" style={{ zIndex: 3 }}>
-          <div className="bg-[#f6c648] text-[#00418d] py-4 px-6 inline-block transform skew-x-12 -ml-4">
+        {/* ─── SkillKwiz Tag ─── */}
+        <div className="relative mt-4 overflow-x-hidden">
+          <div className="bg-[#f6c648] text-[#00418d] py-3 px-5 inline-block transform skew-x-12 ml-0">
             <div className="transform -skew-x-12">
-              <h2 className="text-xl font-bold">
+              <h2 className="text-lg font-bold">
                 SkillKwiz – Verified Skills, Simplified Hiring
               </h2>
             </div>
           </div>
 
-          {/* Letter Carousel - Added right after the SkillKwiz tag */}
-          <div className="mt-8 mb-8">
+          {/* Letter Carousel */}
+          <div className="mt-4 mb-4">
             <LetterCarousel />
           </div>
         </div>
       </div>
 
-      {/* Rest of the content */}
-      <div className="bg-white relative" style={{ zIndex: 3 }}>
+      {/* ─── Rest of page ─── */}
+      <div className="bg-white relative">
         <AuthenticateSkillsSection />
         <WhyChooseSection />
         <TestimonialsSection />

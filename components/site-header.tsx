@@ -6,44 +6,46 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/services", label: "Services" },
+  { href: "/blog", label: "Blog" },
+];
+
 export default function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
   const pathname = usePathname();
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <div className="w-full fixed top-0 left-0 z-50">
       <nav className="flex flex-col w-full md:w-4/5 lg:w-3/5 xl:w-1/2 mx-auto bg-[#335f92] text-white rounded-b-3xl">
-        <div className="flex items-center px-4 py-2">
-          {/* Logo */}
+        <div className="flex items-center justify-between md:justify-center px-4 py-2 md:gap-8 lg:gap-12">
+          {/* Logo — always visible */}
           <Link
             href="/"
-            className={`md:hidden relative group py-4 px-2 text-sm lg:text-base transition-all flex items-center ${
-              pathname === "/" ? "text-yellow-400 font-semibold" : "text-white"
-            }`}
+            onClick={closeMenu}
+            className="flex items-center gap-2 mr-auto md:mr-0"
+            aria-label="SkillKwiz home"
           >
-            <div className="relative flex items-center">
-              <div className="w-auto h-10 flex items-center justify-start">
-                <Image
-                  src="/images/logo.png"
-                  alt="SkillKwiz Logo"
-                  width={40}
-                  height={40}
-                  className="w-auto h-auto object-contain mr-2"
-                />
-                <span className="text-xl font-bold">SkillKwiz</span>
-              </div>
-            </div>
+            <Image
+              src="/images/logo.png"
+              alt="SkillKwiz Logo"
+              width={40}
+              height={40}
+              className="w-auto h-10 object-contain"
+            />
+            <span className="text-xl font-bold text-white">SkillKwiz</span>
           </Link>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white focus:outline-none z-20"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
+            className="md:hidden text-white focus:outline-none z-20 ml-auto"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? (
               <X className="h-6 w-6" />
@@ -53,112 +55,77 @@ export default function SiteHeader() {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:justify-center md:flex-1">
-            <Link
-              href="/"
-              className={`relative group py-4 px-2 text-sm lg:text-base md:px-4 transition-all flex items-center ${
-                pathname === "/"
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white"
-              }`}
-            >
-              <div className="relative flex items-center">
-                <div className="w-auto h-10 flex items-center justify-start">
-                  <Image
-                    src="/images/logo.png"
-                    alt="SkillKwiz Logo"
-                    width={40}
-                    height={40}
-                    className="w-auto h-auto object-contain mr-2"
-                  />
-                  <span className="text-xl font-bold">SkillKwiz</span>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/"
-              className={`relative group py-4 px-2 text-sm md:px-4 lg:text-base transition-all ${
-                pathname === "/"
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white"
-              }`}
-            >
-              <span>Home</span>
-              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            </Link>
-            <Link
-              href="/about"
-              className={`relative group py-4 px-2 text-sm md:px-4 lg:text-base transition-all ${
-                pathname === "/about"
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white"
-              }`}
-            >
-              <span>About Us</span>
-              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            </Link>
-            <Link
-              href="/services"
-              className={`relative group py-4 px-2 text-sm md:px-4 lg:text-base transition-all ${
-                pathname === "/services"
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white"
-              }`}
-            >
-              <span>Services</span>
-              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            </Link>
-            <Link
-              href="/blog"
-              className={`relative group py-4 px-2 text-sm md:px-4 lg:text-base transition-all ${
-                pathname === "/blog"
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white"
-              }`}
-            >
-              <span>Blog</span>
-              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            </Link>
+          <div className="hidden md:flex md:items-center md:gap-1">
+            {navLinks.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`relative group py-4 px-3 text-sm lg:text-base transition-all ${
+                  pathname === href
+                    ? "text-yellow-400 font-semibold"
+                    : "text-white hover:text-yellow-300"
+                }`}
+              >
+                <span>{label}</span>
+                <span className="absolute left-0 bottom-2 w-full h-0.5 bg-gradient-to-r from-blue-400 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation — fixed overlay so it sits above all page content */}
         {isMenuOpen && (
-          <div className="md:hidden flex flex-col items-center py-4 bg-[#335f92] rounded-b-3xl absolute top-0 left-0 w-full pt-16 shadow-lg transition-all duration-300 ease-in-out">
-            <Link
-              href="/"
-              className="text-white relative group py-3 text-lg w-full text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span>Home</span>
-              <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            </Link>
-            <Link
-              href="/about"
-              className="text-white relative group py-3 text-lg w-full text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span>About Us</span>
-              <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            </Link>
-            <Link
-              href="/services"
-              className="text-white relative group py-3 text-lg w-full text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span>Services</span>
-              <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            </Link>
-            <Link
-              href="/blog"
-              className="text-white relative group py-3 text-lg w-full text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span>Blog</span>
-              <span className="absolute left-1/4 right-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            </Link>
-          </div>
+          <>
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 z-40 bg-black/20"
+              onClick={closeMenu}
+              aria-hidden="true"
+            />
+            {/* Menu panel */}
+            <div className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center py-4 bg-[#335f92] rounded-b-3xl pt-16 shadow-xl">
+              {/* Close button at top-right */}
+              <button
+                className="absolute top-3 right-4 text-white"
+                onClick={closeMenu}
+                aria-label="Close menu"
+              >
+                <X className="h-6 w-6" />
+              </button>
+
+              {/* Logo row */}
+              <Link
+                href="/"
+                onClick={closeMenu}
+                className="flex items-center gap-2 mb-2"
+              >
+                <Image
+                  src="/images/logo.png"
+                  alt="SkillKwiz Logo"
+                  width={32}
+                  height={32}
+                  className="w-auto h-8 object-contain"
+                />
+                <span className="text-lg font-bold text-white">SkillKwiz</span>
+              </Link>
+
+              {navLinks.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={closeMenu}
+                  className={`relative group py-3 text-lg w-full text-center transition-colors ${
+                    pathname === href
+                      ? "text-yellow-400 font-semibold"
+                      : "text-white"
+                  }`}
+                >
+                  <span>{label}</span>
+                  <span className="absolute left-1/4 bottom-0 w-1/2 h-0.5 bg-gradient-to-r from-blue-400 to-yellow-400 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                </Link>
+              ))}
+            </div>
+          </>
         )}
       </nav>
     </div>

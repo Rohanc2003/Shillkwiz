@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 export default function WhyChooseSection() {
@@ -11,37 +11,26 @@ export default function WhyChooseSection() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(entry.target);
+          observer.disconnect();
         }
       },
-      {
-        threshold: 0.1,
-      }
+      { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className={`py-12 text-white relative overflow-hidden transition-all duration-1000 ${
+      className={`py-8 md:py-12 text-white bg-[#000c2a] relative overflow-hidden transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      {/* Main container with blue background in the middle and white sides */}
+      {/* Background banners */}
       <div className="absolute inset-0 flex">
-        {/* Middle section with blue backgrounds */}
-        <div className="w-[100%] relative">
-          {/* Top blue background */}
+        <div className="w-full relative">
           <div className="absolute top-0 left-0 right-0 h-[40%]">
             <img
               src="/images/homepage/why_choose_banner_2.png"
@@ -50,8 +39,6 @@ export default function WhyChooseSection() {
               aria-hidden="true"
             />
           </div>
-
-          {/* Bottom blue background with globe */}
           <div className="absolute bottom-0 left-0 right-0 h-[40%]">
             <img
               src="/images/homepage/why_choose_banner_2.png"
@@ -59,8 +46,6 @@ export default function WhyChooseSection() {
               className="w-full h-full object-cover"
               aria-hidden="true"
             />
-
-            {/* Globe animation on bottom background */}
             <div className="absolute inset-0 flex justify-center items-center opacity-60">
               <img
                 src="/images/homepage/home_globe.gif"
@@ -74,7 +59,7 @@ export default function WhyChooseSection() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <h2 className="text-3xl font-bold text-center mb-2">
+        <h2 className="text-2xl font-bold text-center mb-2">
           Why Choose{" "}
           <span className="text-white">
             Skill<span className="text-[#f73e5d]">Kwiz</span>
@@ -88,15 +73,15 @@ export default function WhyChooseSection() {
           Experience the difference SkillKwiz can make in your organization.
         </p>
 
-        {/* Card container with increased height to match image */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-12 relative h-[450px] md:h-[400px]">
-          {/* Skill Library Card - Tilted Left */}
-          <div
-            className="bg-white rounded-lg p-6 text-black max-w-xs w-full md:w-64 md:h-[350px] transform md:absolute md:left-[calc(50%-280px)] md:top-4 hover:-translate-y-2 transition-transform duration-300 shadow-lg z-10"
-            style={{ transform: "rotate(-25deg)" }}
-          >
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-[#c3dfff] rounded-full flex items-center justify-center overflow-hidden">
+        {/*
+          Cards: rotated via Tailwind classes (not inline style) so hover
+          effects actually work. Container uses min-h to avoid clipping.
+        */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-5 mb-6 relative min-h-[320px] md:min-h-[350px]">
+          {/* Skill Library Card — Tilted Left */}
+          <div className="-rotate-6 md:absolute md:left-[calc(50%-320px)] md:top-4 bg-white rounded-lg p-5 text-black w-full max-w-xs md:w-56 hover:-translate-y-3 hover:rotate-0 transition-all duration-300 shadow-lg z-10">
+            <div className="flex justify-center mb-3">
+              <div className="w-14 h-14 bg-[#c3dfff] rounded-full flex items-center justify-center overflow-hidden">
                 <img
                   src="/images/homepage/books.gif"
                   alt=""
@@ -105,20 +90,20 @@ export default function WhyChooseSection() {
                 />
               </div>
             </div>
-            <h3 className="text-[#00418d] text-xl font-bold text-center mb-3">
+            <h3 className="text-[#00418d] text-lg font-bold text-center mb-2">
               Skill Library
             </h3>
-            <p className="text-gray-700 text-center text-sm">
+            <p className="text-gray-700 text-center text-xs">
               Access our extensive library of skill assessments covering
               technical, professional, and soft skills for comprehensive
               candidate evaluation.
             </p>
           </div>
 
-          {/* Secure Testing Card - Center */}
-          <div className="bg-white rounded-lg p-6 text-black max-w-xs w-full md:w-64 md:h-[350px] transform md:z-20 hover:-translate-y-2 transition-transform duration-300 shadow-lg md:absolute md:left-[calc(50%-130px)]">
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-[#c3dfff] rounded-full flex items-center justify-center overflow-hidden">
+          {/* Secure Testing Card — Center */}
+          <div className="md:absolute md:left-[calc(50%-112px)] md:top-0 bg-white rounded-lg p-5 text-black w-full max-w-xs md:w-56 hover:-translate-y-3 transition-all duration-300 shadow-xl z-20">
+            <div className="flex justify-center mb-3">
+              <div className="w-14 h-14 bg-[#c3dfff] rounded-full flex items-center justify-center overflow-hidden">
                 <img
                   src="/images/homepage/guard.gif"
                   alt=""
@@ -127,10 +112,10 @@ export default function WhyChooseSection() {
                 />
               </div>
             </div>
-            <h3 className="text-[#00418d] text-xl font-bold text-center mb-3">
+            <h3 className="text-[#00418d] text-lg font-bold text-center mb-2">
               Secure Testing
             </h3>
-            <p className="text-gray-700 text-center text-sm">
+            <p className="text-gray-700 text-center text-xs">
               Our testing is done in secure content-aware environments.
               Candidates are authenticated through multiple identification
               layers including biometric verification such as facial
@@ -139,13 +124,10 @@ export default function WhyChooseSection() {
             </p>
           </div>
 
-          {/* Flexible Pricing Card - Tilted Right */}
-          <div
-            className="bg-white rounded-lg p-6 text-black max-w-xs w-full md:w-64 md:h-[350px] transform md:absolute md:right-[calc(50%-280px)] md:top-4 hover:-translate-y-2 transition-transform duration-300 shadow-lg z-10"
-            style={{ transform: "rotate(25deg)" }}
-          >
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-[#c3dfff] rounded-full flex items-center justify-center overflow-hidden">
+          {/* Flexible Pricing Card — Tilted Right */}
+          <div className="rotate-6 md:absolute md:right-[calc(50%-320px)] md:top-4 bg-white rounded-lg p-5 text-black w-full max-w-xs md:w-56 hover:-translate-y-3 hover:rotate-0 transition-all duration-300 shadow-lg z-10">
+            <div className="flex justify-center mb-3">
+              <div className="w-14 h-14 bg-[#c3dfff] rounded-full flex items-center justify-center overflow-hidden">
                 <img
                   src="/images/homepage/dollar.gif"
                   alt=""
@@ -154,10 +136,10 @@ export default function WhyChooseSection() {
                 />
               </div>
             </div>
-            <h3 className="text-[#00418d] text-xl font-bold text-center mb-3">
+            <h3 className="text-[#00418d] text-lg font-bold text-center mb-2">
               Flexible Pricing
             </h3>
-            <p className="text-gray-700 text-center text-sm">
+            <p className="text-gray-700 text-center text-xs">
               Our pricing model is designed to scale with your needs. Pay only
               for what you use with our credit-based system. Larger
               organizations can benefit from our Enterprise plan with unlimited
@@ -166,17 +148,15 @@ export default function WhyChooseSection() {
           </div>
         </div>
 
-        <div className="text-center mt-16 relative z-20">
-          <h3 className="text-2xl font-bold mb-4">
-            Join the Talent Revolution
-          </h3>
-          <p className="max-w-2xl mx-auto mb-8 text-sm">
+        <div className="text-center mt-4 relative z-20">
+          <h3 className="text-xl font-bold mb-2">Join the Talent Revolution</h3>
+          <p className="max-w-2xl mx-auto mb-4 text-sm">
             Take the first step towards transforming your hiring process. Make
             selections in line with our tried and tested platform.
           </p>
           <Link
             href="/services"
-            className="inline-flex items-center justify-center bg-[#f7d03e] text-black px-8 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all"
+            className="inline-flex items-center justify-center bg-[#f7d03e] text-black px-8 py-3 rounded-md font-medium hover:bg-[#f6c000] transition-colors"
           >
             Get Started
           </Link>

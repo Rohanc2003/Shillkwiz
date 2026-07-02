@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
@@ -11,6 +11,11 @@ interface CarouselSlide {
 }
 
 export default function LetterCarousel() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -57,18 +62,31 @@ export default function LetterCarousel() {
     }
   };
 
+  // Stable auto-advance — interval runs once, uses ref to avoid stale closure
+  const nextSlideRef = useRef(nextSlide);
+  useEffect(() => {
+    nextSlideRef.current = nextSlide;
+  });
+
   useEffect(() => {
     const interval = setInterval(() => {
-      nextSlide();
+      nextSlideRef.current();
     }, 5000);
-
     return () => clearInterval(interval);
-  }, [currentSlide, isAnimating]);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="relative h-[240px] w-full rounded-xl bg-gray-200 shadow-lg"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-6">
       <div className="relative overflow-hidden rounded-xl bg-white shadow-lg">
-        <div className="relative h-[300px] w-full">
+        <div className="relative h-[240px] w-full">
           {slides.map((slide, index) => (
             <div
               key={index}
@@ -94,11 +112,11 @@ export default function LetterCarousel() {
 
               <div className="flex flex-col h-full relative z-10">
                 {/* Letters row */}
-                <div className="flex justify-center items-center py-8 gap-4">
+                <div className="flex justify-center items-center py-5 gap-3">
                   {slide.letters.map((letter, letterIndex) => (
                     <div
                       key={letterIndex}
-                      className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gradient-to-br from-[#00418d] to-[#0066cc] text-white text-3xl md:text-4xl font-bold rounded-lg shadow-md transform hover:scale-110 transition-transform"
+                      className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center bg-gradient-to-br from-[#00418d] to-[#0066cc] text-white text-2xl md:text-3xl font-bold rounded-lg shadow-md transform hover:scale-110 transition-transform"
                     >
                       {letter}
                     </div>
@@ -106,11 +124,11 @@ export default function LetterCarousel() {
                 </div>
 
                 {/* Content */}
-                <div className="text-center px-6 py-4">
-                  <h3 className="text-2xl font-bold text-white mb-2">
+                <div className="text-center px-6 py-2">
+                  <h3 className="text-xl font-bold text-white mb-1">
                     {slide.title}
                   </h3>
-                  <p className="text-white/90">{slide.description}</p>
+                  <p className="text-white/90 text-sm">{slide.description}</p>
                 </div>
               </div>
             </div>

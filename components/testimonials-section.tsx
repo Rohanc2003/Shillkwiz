@@ -49,89 +49,82 @@ const testimonials = [
 ];
 
 export default function TestimonialsSection() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [visibleTestimonials, setVisibleTestimonials] = useState([]);
-  const intervalRef = useRef(null);
 
-  // Function to get visible testimonials based on active index
-  const updateVisibleTestimonials = (index) => {
+  const [visibleTestimonials, setVisibleTestimonials] = useState(() => {
     const totalTestimonials = testimonials.length;
+    const initialIndex = 0;
+    const prevIndex =
+      (initialIndex - 1 + totalTestimonials) % totalTestimonials;
+    const nextIndex = (initialIndex + 1) % totalTestimonials;
+    return [
+      testimonials[prevIndex],
+      testimonials[initialIndex],
+      testimonials[nextIndex],
+    ];
+  });
 
-    // Calculate previous, current and next indices with wrapping
-    const prevIndex = (index - 1 + totalTestimonials) % totalTestimonials;
-    const nextIndex = (index + 1) % totalTestimonials;
-
+  // Update the 3 visible testimonials whenever the active index changes
+  useEffect(() => {
+    const totalTestimonials = testimonials.length;
+    const prevIndex = (activeIndex - 1 + totalTestimonials) % totalTestimonials;
+    const nextIndex = (activeIndex + 1) % totalTestimonials;
     setVisibleTestimonials([
       testimonials[prevIndex],
-      testimonials[index],
+      testimonials[activeIndex],
       testimonials[nextIndex],
     ]);
-  };
-
-  // Initialize visible testimonials
-  useEffect(() => {
-    updateVisibleTestimonials(activeIndex);
-
-    // Auto-rotate testimonials
-    intervalRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, []);
-
-  // Update visible testimonials when active index changes
-  useEffect(() => {
-    updateVisibleTestimonials(activeIndex);
   }, [activeIndex]);
 
-  // Handle navigation
+  // Stable auto-advance interval — runs once, reads activeIndex via ref
+  const activeIndexRef = useRef(activeIndex);
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const goToPrev = () => {
     setActiveIndex(
       (prev) => (prev - 1 + testimonials.length) % testimonials.length
     );
-
-    // Reset interval timer when manually navigating
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % testimonials.length);
-      }, 5000);
-    }
   };
 
   const goToNext = () => {
     setActiveIndex((prev) => (prev + 1) % testimonials.length);
-
-    // Reset interval timer when manually navigating
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % testimonials.length);
-      }, 5000);
-    }
   };
 
-  const goToSlide = (index) => {
+  const goToSlide = (index: number) => {
     setActiveIndex(index);
-
-    // Reset interval timer when manually navigating
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % testimonials.length);
-      }, 5000);
-    }
   };
+
+  if (!isMounted) {
+    return (
+      <section className="py-8 md:py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-2xl font-bold text-center mb-5">
+            What Our Clients Say
+          </h2>
+          <div className="relative h-[320px] md:h-[280px]"></div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-8 md:py-12 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-8">
+        <h2 className="text-2xl font-bold text-center mb-5">
           What Our Clients Say
         </h2>
 
@@ -154,30 +147,30 @@ export default function TestimonialsSection() {
           </button>
 
           {/* Testimonial carousel */}
-          <div className="flex justify-center items-center gap-4 mb-8 overflow-hidden px-4 h-[400px] md:h-[350px]">
+          <div className="flex justify-center items-stretch gap-4 mb-6 overflow-hidden px-4 h-[320px] md:h-[280px] pb-2">
             {visibleTestimonials.map((testimonial, index) => (
               <div
                 key={testimonial.id}
                 className={`
-                  bg-[#00418d] rounded-lg text-white transition-all duration-500 flex flex-col justify-start
+                  bg-[#00418d] rounded-lg text-white transition-all duration-500 flex flex-col justify-start h-full
                   ${
                     index === 1
-                      ? "w-full md:w-[50%] h-[350px] p-6 z-20 shadow-lg"
-                      : "w-0 md:w-[25%] h-[250px] p-3 opacity-70 z-10 shadow-md"
+                      ? "w-full md:w-[50%] p-5 z-20 shadow-lg"
+                      : "w-0 md:w-[25%] p-4 opacity-70 z-10 shadow-md"
                   }
                 `}
               >
-                <div className="flex flex-col items-center mb-4">
+                <div className="flex flex-col items-center mb-3">
                   <div
-                    className={`rounded-full overflow-hidden mb-3 border-2 border-white
-                      ${index === 1 ? "w-20 h-20" : "w-12 h-12"}
+                    className={`rounded-full overflow-hidden mb-2 border-2 border-white
+                      ${index === 1 ? "w-14 h-14" : "w-10 h-10"}
                     `}
                   >
                     <Image
                       src={testimonial.image || "/placeholder.svg"}
                       alt={testimonial.name}
-                      width={index === 1 ? 80 : 48}
-                      height={index === 1 ? 80 : 48}
+                      width={index === 1 ? 56 : 40}
+                      height={index === 1 ? 56 : 40}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -209,7 +202,7 @@ export default function TestimonialsSection() {
                 <p
                   className={`text-center ${
                     index === 1 ? "text-sm" : "text-xs"
-                  } ${index !== 1 ? "line-clamp-4" : ""}`}
+                  }`}
                 >
                   "{testimonial.quote}"
                 </p>

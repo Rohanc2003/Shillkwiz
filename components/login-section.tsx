@@ -34,31 +34,34 @@ export default function LoginSection() {
   return (
     <section
       ref={sectionRef}
-      className={`py-12 bg-[#000c2a] transition-all duration-1000 ${
+      className={`py-8 md:py-12 bg-[#000c2a] transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
       <div className="max-w-5xl mx-auto px-6">
         <div className="bg-white rounded-lg overflow-hidden shadow-xl flex flex-col md:flex-row">
           {/* Left side - Image */}
-          <div className="w-full md:w-1/2 p-8 flex items-center justify-center">
+          <div className="w-full md:w-1/2 p-4 flex items-center justify-center">
             <Image
               src="/images/login-section.png"
               alt="Login illustration"
-              width={400}
-              height={400}
-              className="object-contain"
+              width={300}
+              height={300}
+              className="object-contain max-h-[200px]"
             />
           </div>
 
           {/* Right side - Login Form */}
-          <div className="w-full md:w-1/2 bg-[#00418d] p-8 flex items-center">
+          <div className="w-full md:w-1/2 bg-[#00418d] p-4 flex items-center">
             <div className="w-full">
               <h2 className="text-xl font-bold text-white mb-6">
                 Sign in to Skill Kwiz
               </h2>
 
-              <form className="space-y-4">
+              <form
+                className="space-y-4"
+                onSubmit={(e) => e.preventDefault()}
+              >
                 <div>
                   <input
                     type="email"
@@ -80,7 +83,7 @@ export default function LoginSection() {
                     <input type="checkbox" className="h-4 w-4 mr-2" />
                     Remember me
                   </label>
-                  <a href="#" className="text-white hover:underline">
+                  <a className="text-white hover:underline">
                     Forget Password?
                   </a>
                 </div>

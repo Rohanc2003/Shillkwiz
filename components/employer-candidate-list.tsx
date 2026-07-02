@@ -63,9 +63,9 @@ export default function EmployerCandidateList() {
   return (
     <div className="text-white">
       {/* Search Bar */}
-      <div className="bg-[#1a2b4a] rounded-full overflow-hidden mb-6">
-        <div className="grid grid-cols-4">
-          <div className="col-span-1 flex items-center px-4 py-3 border-r border-gray-600">
+      <div className="bg-[#1a2b4a] rounded-xl md:rounded-full overflow-hidden mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4">
+          <div className="col-span-1 flex items-center px-4 py-3 border-b md:border-b-0 md:border-r border-gray-600">
             <Search className="w-5 h-5 mr-2 text-gray-400" />
             <input
               type="text"
@@ -73,7 +73,7 @@ export default function EmployerCandidateList() {
               className="bg-transparent w-full focus:outline-none text-white"
             />
           </div>
-          <div className="flex items-center px-4 py-3 border-r border-gray-600">
+          <div className="flex items-center px-4 py-3 border-b md:border-b-0 md:border-r border-gray-600">
             <MapPin className="w-5 h-5 mr-2 text-gray-400" />
             <input
               type="text"
@@ -81,13 +81,13 @@ export default function EmployerCandidateList() {
               className="bg-transparent w-full focus:outline-none text-white"
             />
           </div>
-          <div className="flex items-center px-4 py-3 border-r border-gray-600">
+          <div className="flex items-center px-4 py-3 border-b md:border-b-0 md:border-r border-gray-600">
             <div className="relative w-full">
               <select className="w-full bg-transparent appearance-none focus:outline-none text-white">
-                <option value="">Job Family</option>
-                <option value="software">Software Development</option>
-                <option value="data">Data Science</option>
-                <option value="design">Design</option>
+                <option value="" className="bg-[#1a2b4a]">Job Family</option>
+                <option value="software" className="bg-[#1a2b4a]">Software Development</option>
+                <option value="data" className="bg-[#1a2b4a]">Data Science</option>
+                <option value="design" className="bg-[#1a2b4a]">Design</option>
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                 <svg
@@ -107,7 +107,7 @@ export default function EmployerCandidateList() {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center justify-between px-4 py-3 gap-4">
             <button className="text-white hover:text-gray-300">Clear</button>
             <button className="bg-[#00bcd4] text-white px-6 py-1 rounded-full hover:bg-[#00a5bb]">
               Search
@@ -116,7 +116,7 @@ export default function EmployerCandidateList() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Filter Section */}
         <div className="col-span-1">
           <div className="bg-[#4a63b3] rounded-lg overflow-hidden">
@@ -209,7 +209,7 @@ export default function EmployerCandidateList() {
         </div>
 
         {/* Candidate List */}
-        <div className="col-span-3 space-y-4">
+        <div className="col-span-1 md:col-span-3 space-y-4">
           {candidates.map((candidate) => (
             <div key={candidate.id} className="bg-[#4a63b3]/80 rounded-lg p-4">
               <div className="flex items-center justify-between">

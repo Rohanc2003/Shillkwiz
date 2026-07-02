@@ -1,11 +1,8 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "SkillKwiz - Skill Assessment Solutions",
@@ -21,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
           <main className="flex-grow">{children}</main>
@@ -31,5 +28,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-import "./globals.css";

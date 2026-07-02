@@ -4,6 +4,7 @@ import type React from "react";
 
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 
 interface LoginFormProps {
   onLogin: (userType: "employer" | "employee") => void;
@@ -70,7 +71,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full bg-[#333333] rounded pl-10 pr-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+              className="w-full bg-[#1a2544] rounded pl-10 pr-4 py-3 text-white placeholder-gray-400 focus:outline-none"
               required
             />
           </div>
@@ -91,7 +92,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="w-full bg-[#333333] rounded pl-10 pr-10 py-3 text-white placeholder-gray-400 focus:outline-none"
+              className="w-full bg-[#1a2544] rounded pl-10 pr-10 py-3 text-white placeholder-gray-400 focus:outline-none"
               required
             />
             <button
@@ -118,7 +119,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         {/* Login Button */}
         <button
           type="submit"
-          className="w-full py-3 rounded bg-gradient-to-r from-[#4ECDC4] to-[#2d8a84] text-white hover:opacity-90 font-medium"
+          className="w-full py-3 rounded bg-[#00418d] text-white hover:bg-[#002f6e] font-medium transition-colors"
         >
           Login
         </button>
@@ -127,9 +128,9 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         <div className="text-center mt-4">
           <p className="text-gray-300">
             Don't have an account?{" "}
-            <a href="#" className="text-blue-400 hover:text-blue-300">
+            <Link href="/signup" className="text-[#f6c648] hover:underline font-semibold">
               Sign Up
-            </a>
+            </Link>
           </p>
         </div>
       </form>

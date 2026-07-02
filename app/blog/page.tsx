@@ -30,7 +30,7 @@ export default function BlogPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="w-full bg-white py-12">
+      <section className="w-full bg-white py-12 pt-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-4">
@@ -57,13 +57,12 @@ export default function BlogPage() {
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  <div className="relative mb-4 overflow-hidden">
+                  <div className="relative mb-4 overflow-hidden aspect-[16/10] rounded-lg">
                     <Image
                       src={post.img}
                       alt={post.title}
-                      width={380}
-                      height={240}
-                      className="w-full h-auto object-cover"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <h3 className="text-lg font-bold mb-1">{post.title}</h3>
@@ -89,13 +88,12 @@ export default function BlogPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {/* Blog Post 4 */}
             <div className="flex flex-col h-full">
-              <div className="relative h-60 mb-4">
+              <div className="relative aspect-[16/9] w-full mb-4 overflow-hidden rounded-lg">
                 <Image
                   src="/images/blogpage/4.png"
                   alt="Tech skills"
-                  width={580}
-                  height={240}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
               <h3 className="text-xl font-bold mb-2">
@@ -108,13 +106,12 @@ export default function BlogPage() {
 
             {/* Blog Post 5 */}
             <div className="flex flex-col h-full">
-              <div className="relative h-60 mb-4">
+              <div className="relative aspect-[16/9] w-full mb-4 overflow-hidden rounded-lg">
                 <Image
                   src="/images/blogpage/5.png"
                   alt="Learning motivation"
-                  width={580}
-                  height={240}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
               <h3 className="text-xl font-bold mb-2">
