@@ -27,17 +27,17 @@ export default function SiteHeader() {
           <Link
             href="/"
             onClick={closeMenu}
-            className="flex items-center gap-2 mr-auto md:mr-0"
+            className="flex items-center mr-auto md:mr-0"
             aria-label="SkillKwiz home"
           >
             <Image
-              src="/images/logo.png"
+              src="/images/SVG File- logo (1).svg"
               alt="SkillKwiz Logo"
-              width={40}
-              height={40}
-              className="w-auto h-10 object-contain"
+              width={180}
+              height={42}
+              className="w-[180px] h-auto object-contain"
+              priority
             />
-            <span className="text-xl font-bold text-white">SkillKwiz</span>
           </Link>
 
           {/* Mobile Menu Button */}
@@ -97,16 +97,16 @@ export default function SiteHeader() {
               <Link
                 href="/"
                 onClick={closeMenu}
-                className="flex items-center gap-2 mb-2"
+                className="flex items-center mb-2"
               >
                 <Image
-                  src="/images/logo.png"
+                  src="/images/SVG File- logo (1).svg"
                   alt="SkillKwiz Logo"
-                  width={32}
-                  height={32}
-                  className="w-auto h-8 object-contain"
+                  width={140}
+                  height={33}
+                  className="w-[140px] h-auto object-contain"
+                  priority
                 />
-                <span className="text-lg font-bold text-white">SkillKwiz</span>
               </Link>
 
               {navLinks.map(({ href, label }) => (
